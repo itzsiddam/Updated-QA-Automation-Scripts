@@ -1,0 +1,121 @@
+*** Settings ***
+Documentation  
+Resource  ../COMMON/INCLUDE.txt
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Suite Setup  Setup Test Suite  ${EN}
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*** Test Cases ***
+TC-01: Creating a Chat Activity - Teacher
+	## Start Test
+	## Test Case For Admin
+	[Tags]  ADMIN  LOGIN  
+	##################################################################################################
+	Go To JBLearning Application and Login  ${TEACHER_USER_NAME}  ${TEACHER_PASSWORD}
+	Launch the Course with Course ID
+	Creating Activity In the Course - Chat
+	## End Test
+	##################################################################################################
+	[Teardown]  Wrap Up Test
+	
+TC-02: Creating a Quiz - Teacher
+	## Start Test
+	## Test Case For Admin
+	[Tags]  ADMIN
+	##################################################################################################
+	Go To JBLearning Application and Login  ${TEACHER_USER_NAME}  ${TEACHER_PASSWORD}
+	Launch the Course with Course ID
+	Creating Activity In the Course - Quiz
+	## End Test
+	##################################################################################################
+	[Teardown]  Wrap Up Test	
+	
+	
+TC-03: Creating a Midterm - Teacher
+	## Start Test
+	## Test Case For Admin
+	[Tags]  ADMIN  
+	##################################################################################################
+	Go To JBLearning Application and Login  ${TEACHER_USER_NAME}  ${TEACHER_PASSWORD}
+	Launch the Course with Course ID
+	Creating Activity In the Course - Midterm
+	## End Test
+	##################################################################################################
+	[Teardown]  Wrap Up Test
+	
+TC-04: Creating a Final Exam - Teacher
+	## Start Test
+	## Test Case For Admin
+	[Tags]  ADMIN  
+	##################################################################################################
+	Go To JBLearning Application and Login  ${TEACHER_USER_NAME}  ${TEACHER_PASSWORD}
+	Launch the Course with Course ID
+	Creating Activity In the Course - Final Exam
+	## End Test
+	##################################################################################################
+	[Teardown]  Wrap Up Test
+	
+TC-05: Launching the Chat Activity - Student
+	## Start Test
+	## Test Case For Admin
+	[Tags]  ADMIN  
+	##################################################################################################
+	Go To JBLearning Application and Login  ${TEACHER_USER_NAME}  ${TEACHER_PASSWORD}
+	Launch the Course with Course ID
+	${CHAT_ACTI_NAME}  Creating Activity In the Course - Chat  False
+	Log out of JBLearning Application
+	Navigate To JBLearning Application and Login  ${STUDENT_USER_NAME}  ${STUDENT_PASSWORD}  
+	Launch the Course with Course ID
+	Launching the Chat Activity - Student  ${CHAT_ACTI_NAME}  
+	## End Test
+	##################################################################################################
+	[Teardown]  Wrap Up Test	
+	
+TC -06: Launching the Quiz - Student	
+	## Test Case For Admin
+	[Tags]  ADMIN  
+	## Start Test
+	##################################################################################################
+	Go To JBLearning Application and Login  ${TEACHER_USER_NAME}  ${TEACHER_PASSWORD}
+	Launch the Course with Course ID
+	${QUIZ_ACTI_NAME}  Creating Activity In the Course - Quiz
+	Log out of JBLearning Application
+	Navigate To JBLearning Application and Login  ${STUDENT_USER_NAME}  ${STUDENT_PASSWORD}  
+	Launch the Course with Course ID
+	Launching the Quiz - Student  ${QUIZ_ACTI_NAME}
+	## End Test
+	##################################################################################################
+	[Teardown]  Wrap Up Test	
+	
+TC -07: Launching the Midterm - Student
+    ##  Test Case For Admin
+	[Tags]  ADMIN    this
+	## Start Test
+	####################################################################################################
+	Go To JBLearning Application and Login  ${TEACHER_USER_NAME}  ${TEACHER_PASSWORD}
+	Launch the Course with Course ID
+	${MIDTERM_ACTI_NAME}  Creating Activity In the Course - Midterm
+	Log out of JBLearning Application
+	Navigate To JBLearning Application and Login  ${STUDENT_USER_NAME}  ${STUDENT_PASSWORD}
+	Launch the Course with Course ID
+	Launching the Midterm - Student  ${MIDTERM_ACTI_NAME}
+	## End Test
+	#####################################################################################################
+	[Teardown]  Wrap Up Test	
+	
+TC -08: Launching the FinalExam - Student
+    ##  Test Case For Admin
+	[Tags]  ADMIN
+	## Start Test
+	####################################################################################################
+	Go To JBLearning Application and Login  ${TEACHER_USER_NAME}  ${TEACHER_PASSWORD}
+	Launch the Course with Course ID
+	${FINAL_ACTI_NAME}  Creating Activity In the Course - FinalExam
+	Log out of JBLearning Application
+	Navigate To JBLearning Application and Login  ${STUDENT_USER_NAME}  ${STUDENT_PASSWORD}
+	Launch the Course with Course ID
+	Launching the Final Exam - Student  ${FINAL_ACTI_NAME}
+	## End Test
+	#####################################################################################################
+	[Teardown]  Wrap Up Test	
+	

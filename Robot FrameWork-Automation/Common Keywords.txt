@@ -1,0 +1,556 @@
+*** Settings ***
+Documentation  This resource file that contains non-product specific keywords for testing.
+Resource  INCLUDE.txt
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*** Keywords ***
+Go To JBLearning Application and Login
+	[Arguments]  ${USER_ID}  ${USER_PASSWORD} 
+	Open Browser  ${LOGINURL}  ${BROWSER}  
+	Maximize Browser Window 
+	Set Selenium Speed  ${SEL_SPEED}	
+	${LOGIN_BTN_STAT}  Run Keyword and Return Status  Element Should Be Visible  ${LOGIN_BTN}
+	Run Keyword If  '${LOGIN_BTN_STAT}'=='True'  Click ELement  ${LOGIN_BTN}
+	Input Text  ${LOGIN_EDIT}  ${USER_ID}
+	Input Password  ${PASSWORD_EDIT}  ${USER_PASSWORD}
+	${SUBMIT_BTN_STAT}  Run Keyword and Return Status  Element Should Be Visible  ${LOGIN_SUBMIT_BTN_QA}
+	Run Keyword If  '${SUBMIT_BTN_STAT}'=='True'  Click ELement  ${LOGIN_SUBMIT_BTN_QA}  ELSE  Click Button  ${LOGIN_SUBMIT_BTN} 
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  ${SYSTEM_CHECK_CLOSE_BTN}
+	#Run Keyword If  '${STAT}'=='True'  Click ELement  ${SYSTEM_CHECK_CLOSE_BTN}
+	#${STG_TEMP}  Run Keyword If  '${EN}'=='STG'  Get Element Attribute  //a[@id='ctl00_mainContent_gv_courses_ctl02_btnStartCourse0']@onclick
+	#@{STG_TEMP_URL}  Run Keyword If  '${EN}'=='STG'  Split String  ${STG_TEMP}  ('
+     #@{STG_TEMP_URL1}  Run Keyword If  '${EN}'=='STG'  Split String  ${STG_TEMP_URL[1]}  ')
+	#${STG_TEMP_URL_FINAL}  Run Keyword If  '${EN}'=='STG'  Set Variable  ${STG_TEMP_URL1[0]}
+	#Run Keyword If  '${EN}'=='STG'  Go To  ${STG_TEMP_URL_FINAL}
+	#Run Keyword If  '${EN}'=='STG'  Wait Until Keyword Succeeds  4 min  30 sec  Validate Browser is Ready
+	
+Log out of JBLearning Application
+	Click Element	${LOGOUT_BTN}
+	
+Wrap Up Test
+	Log out of JBLearning Application
+	Close Window
+	
+Setup Test Suite
+	#Created By: Srikanth Siddam
+	#[Documentation]  Sets up the login Url specified test environment to execute the test suite.
+	[Arguments]  ${EN}
+	Run Keyword If  '${EN}'=='QA'  Set Global Variable  ${LOGINURL}  http://qastaging.dev.jbldev.com:8024/login/index.php
+	#Run Keyword If  '${EN}'=='STG'  Set Global Variable  ${LOGINURL}  http://www.staging.jblearning.com/
+	#Run Keyword If  '${EN}'=='STG'  Set Global Variable  ${LOGINURL}  http://staging.jblearning.com/myaccount/login.aspx
+	#Run Keyword If  '${EN}'=='PROD'  Set Global Variable  ${LOGINURL}  http://www.jblearning.com/
+	#Run Keyword If  '${EN}'=='LOCAL'  Set Global Variable  ${LOGINURL}  http://itzsiddam.dev.jbldev.com:8024/login/index.php
+	
+Create User
+	[Arguments]  ${NAME_USER}=None
+	${USER}  Run Keyword If  '${NAME_USER}'=='None'  Generate Random String  6  [LOWER]  ELSE  Set Variable  ${NAME_USER}
+	${PSWD}  Set Variable  Testing@123
+	${ATTR_VAL}  Get Element Attribute  ${SITE_ADMINISTRATION_LNK}/../..@aria-expanded
+	Run Keyword If  '${ATTR_VAL}'=='false'  Click Element  ${SITE_ADMINISTRATION_LNK}
+	${USERS_ATTR_VAL}  Get Element Attribute  ${SITE_ADMINISTRATION_USERS_LNK}/../..@aria-expanded
+	Run Keyword If  '${USERS_ATTR_VAL}'=='false'  Click Element  ${SITE_ADMINISTRATION_USERS_LNK}
+	${ACNTS_ATTR_VAL}  Get Element Attribute  ${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}/../..@aria-expanded
+	Run Keyword If  '${ACNTS_ATTR_VAL}'=='false'  Click Element  ${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}
+	Click Element  ${ADD_USER_LNK}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${USERNAME_TXT}
+	Input Text  ${USERNAME_TXT}  ${USER}
+	Input Text  ${PASSWORD_TXT}  ${PSWD}
+	${TMP}  Generate Random String  4  [LETTERS]
+	${USER_FNAME_TXT}  Set Variable  AutoF ${TMP}
+	${USER_LNAME_TXT}  Set Variable   AutoL ${TMP}
+	Input Text  ${USER_FIRSTNAME_TXT}  ${USER_FNAME_TXT}
+	Input Text  ${USER_LASTNAME_TXT}  ${USER_LNAME_TXT}
+	Input Text  ${USER_EMAIL_TXT}  Auto${TMP}@nomail.com
+	Input Text  ${USER_CITY_TXT}  Boston
+	Select From List  ${USER_COUNTRY_DROPDOWN}  United States	
+	Click Element  ${CREATE_USER_BTN}
+	Element Should Be Visible  //a[text()='${USER_FNAME_TXT} ${USER_LNAME_TXT}']
+	[Return]  ${USER}  ${PSWD}  ${USER_FNAME_TXT}  ${USER_LNAME_TXT}
+	
+Navigate To Home Page
+	${URL}  Replace String  ${LOGINURL}  /login/index.php  ${EMPTY}
+	Go To  ${URL}
+	
+Assign Role To the User
+	[Arguments]  ${NAME_USER}  ${ROLE}		
+	${FRONT_PAGE_SETTINGS_ATTR_VAL}  Get Element Attribute  ${FRONT_PAGE_SETTINGS_LNK}/../..@aria-expanded
+	Run Keyword If  '${FRONT_PAGE_SETTINGS_ATTR_VAL}'=='false'  Click Element  ${FRONT_PAGE_SETTINGS_LNK}
+	Click Element  ${TURN_EDITING_ON_LNK}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${TURN_EDITING_OFF_LNK}
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a
+	${ATTR_VAL}  Get Element Attribute  ${COURSE_ADMINISTRATION_LNK}/../..@aria-expanded
+	Run Keyword If  '${ATTR_VAL}'=='false'  Click Element  ${COURSE_ADMINISTRATION_LNK}
+	${USERS_ATTR_VAL}  Get Element Attribute  ${COURSE_ADMINISTRATION_USERS_LNK}/../..@aria-expanded
+	Run Keyword If  '${USERS_ATTR_VAL}'=='false'  Click Element  ${COURSE_ADMINISTRATION_USERS_LNK}
+	Click Element  ${ENROLLED_USERS_LNK}
+	Click Element  ${ENROL_USERS_LNK}	
+	${STAT}  Run Keyword and Return Status  Wait Until Keyword Succeeds  1 min  15 sec  Element Should Be Visible  ${ENROL_USER_SEARCH_TXT}
+	Run Keyword If  '${STAT}'=='True'  Nested Keyword to Assign Role To the User - Popup  ${NAME_USER}  ${ROLE}
+	Run Keyword If  '${STAT}'=='False'  Nested Keyword to Assign Role To the User  ${NAME_USER}  ${ROLE}
+	
+Nested Keyword to Assign Role To the User - Popup
+	[Arguments]  ${NAME_USER}  ${ROLE}
+	Input Text  ${ENROL_USER_SEARCH_TXT}  ${NAME_USER}
+	Click Element  ${ENROL_USER_SEARCH_BTN}
+	Sleep  5
+	Select From List  ${ASSIGN_ROLE_DROPDOWN}  ${ROLE}
+	Click Element  //div[text()='${NAME_USER}']/../..//input[@value='Enrol']
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  //div[text()='${NAME_USER}']/../..//input[@value='Enrol']
+	Click Element  ${FINISH_ENROLL_USERS_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  //table[contains(@class,'userenrolment')]/tbody/tr/td/div[contains(text(),'${NAME_USER}')]
+	
+Nested Keyword to Assign Role To the User
+	[Arguments]  ${NAME_USER}  ${ROLE}
+	Select From List  ${ASSIGN_ROLE_DROPDOWN_1}	 ${ROLE}
+	Click Element  ${USERS_MULTI_SELECT_DROPDOWN}//option[contains(text(),'${NAME_USER}')]
+	Click Element  ${USER_ADD_BTN}
+	Click Element  ${ENROLLED_USERS_LNK}
+	Element Should Be Visible  //table[contains(@class,'userenrolment')]/tbody/tr/td/div[contains(text(),'${NAME_USER}')]		
+	
+Delete User
+	[Arguments]  ${NAME_USER}
+	Navigate To Home Page
+	${ATTR_VAL}  Get Element Attribute  ${SITE_ADMINISTRATION_LNK}/../..@aria-expanded
+	Run Keyword If  '${ATTR_VAL}'=='false'  Click Element  ${SITE_ADMINISTRATION_LNK}
+	${USERS_ATTR_VAL}  Get Element Attribute  ${SITE_ADMINISTRATION_USERS_LNK}/../..@aria-expanded
+	Run Keyword If  '${USERS_ATTR_VAL}'=='false'  Click Element  ${SITE_ADMINISTRATION_USERS_LNK}
+	${ACNTS_ATTR_VAL}  Get Element Attribute  ${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}/../..@aria-expanded
+	Run Keyword If  '${ACNTS_ATTR_VAL}'=='false'  Click Element  ${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}
+	Click Element  ${BROWSE_LIST_OF_USERS_LNK}
+	Click Element  //a[text()='${NAME_USER}']/../../td[6]/a[@title='Delete']
+	Click Element  ${CONTINUE_BTN}
+	Element Should Not Be Visible  //a[text()='${NAME_USER}']
+	
+Creating Chat Activity In the Course			
+	Navigate To Home Page
+	#${FRONT_PAGE_SETTINGS_ATTR_VAL}  Get Element Attribute  ${FRONT_PAGE_SETTINGS_LNK}/../..@aria-expanded
+	#Run Keyword If  '${FRONT_PAGE_SETTINGS_ATTR_VAL}'=='false'  Click Element  ${FRONT_PAGE_SETTINGS_LNK}
+	#Click Element  ${TURN_EDITING_ON_LNK}
+	#Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${TURN_EDITING_OFF_LNK}
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a
+	#Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${COURSE_TOPIC_1}
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	${ATTR_VAL}  Get Element Attribute  ${COURSE_ADMINISTRATION_LNK}/../..@aria-expanded
+	Run Keyword If  '${ATTR_VAL}'=='false'  Click Element  ${COURSE_ADMINISTRATION_LNK}
+	Click Element  ${TURN_EDITING_ON_LNK}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${TURN_EDITING_OFF_LNK}
+	${TMP}  Generate Random String  4  [LETTERS]
+	${CHAT_NAME}  Set Variable  AutoChat ${TMP}
+	#Mouse Over  ${COURSE_TOPIC_1}
+	#Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${COURSE_TOPIC_1}/..//span[text()='Add an activity or resource']
+	#Click Element  ${COURSE_TOPIC_1}/..//span[text()='Add an activity or resource']/..
+	Execute Javascript  document.getElementsByClassName('section-modchooser-text').item(1).click();
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${ACTIVITY_ADD_BTN}
+	Click Element  ${CHAT_RADIO_BTN}
+	Click Element  ${ACTIVITY_ADD_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  ${ACTIVITY_ADD_BTN}
+	Input Text  ${CHAT_NAME_TXT}  ${CHAT_NAME}
+	Select Frame  ${CHAT_DESCRIPTION_IFRAME}
+	Input Text  ${CHAT_DESCRIPTION_BODY}  ${CHAT_NAME}
+	Unselect Frame
+	#Select Window
+	Click Element  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Execute Javascript  document.getElementsByClassName('section main clearfix sectiondraggable yui3-dd-drop').item(0).click();
+	Element Should Be Visible  //span[contains(text(),'${CHAT_NAME}')]
+	
+Creating Forum Activity In the Course  
+	Navigate To Home Page
+	#${FRONT_PAGE_SETTINGS_ATTR_VAL}  Get Element Attribute  ${FRONT_PAGE_SETTINGS_LNK}/../..@aria-expanded
+	#Run Keyword If  '${FRONT_PAGE_SETTINGS_ATTR_VAL}'=='false'  Click Element  ${FRONT_PAGE_SETTINGS_LNK}
+	#Click Element  ${TURN_EDITING_ON_LNK}
+	#Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${TURN_EDITING_OFF_LNK}
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a
+	#Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${COURSE_TOPIC_1}
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	${ATTR_VAL}  Get Element Attribute  ${COURSE_ADMINISTRATION_LNK}/../..@aria-expanded
+	Run Keyword If  '${ATTR_VAL}'=='false'  Click Element  ${COURSE_ADMINISTRATION_LNK}
+	Click Element  ${TURN_EDITING_ON_LNK}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${TURN_EDITING_OFF_LNK}
+	${TMP}  Generate Random String  4  [LETTERS]
+	${FORUM_NAME}  Set Variable  AutoForum ${TMP}
+	#Mouse Over  ${COURSE_TOPIC_1}
+	#Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${COURSE_TOPIC_1}/..//span[text()='Add an activity or resource']
+	#Click Element  ${COURSE_TOPIC_1}/..//span[text()='Add an activity or resource']/..
+	Execute Javascript  document.getElementsByClassName('section-modchooser-text').item(1).click();
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${ACTIVITY_ADD_BTN}
+	Click Element  ${FORUM_RADIO_BTN}
+	Click Element  ${ACTIVITY_ADD_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  ${ACTIVITY_ADD_BTN}
+	Input Text  ${CHAT_NAME_TXT}  ${FORUM_NAME}
+	Select Frame  ${CHAT_DESCRIPTION_IFRAME}
+	Input Text  ${CHAT_DESCRIPTION_BODY}  ${FORUM_NAME}
+	Unselect Frame
+	#Select Window
+	Click Element  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Execute Javascript  document.getElementsByClassName('section main clearfix sectiondraggable yui3-dd-drop').item(0).click();
+	Element Should Be Visible  //span[contains(text(),'${FORUM_NAME}')]	
+	
+Creating Attendance Activity In the Course
+	Navigate To Home Page
+	#${FRONT_PAGE_SETTINGS_ATTR_VAL}  Get Element Attribute  ${FRONT_PAGE_SETTINGS_LNK}/../..@aria-expanded
+	#Run Keyword If  '${FRONT_PAGE_SETTINGS_ATTR_VAL}'=='false'  Click Element  ${FRONT_PAGE_SETTINGS_LNK}
+	#Click Element  ${TURN_EDITING_ON_LNK}
+	#Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${TURN_EDITING_OFF_LNK}
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a
+	#Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${COURSE_TOPIC_1}
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	${ATTR_VAL}  Get Element Attribute  ${COURSE_ADMINISTRATION_LNK}/../..@aria-expanded
+	Run Keyword If  '${ATTR_VAL}'=='false'  Click Element  ${COURSE_ADMINISTRATION_LNK}
+	Click Element  ${TURN_EDITING_ON_LNK}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${TURN_EDITING_OFF_LNK}
+	${TMP}  Generate Random String  4  [LETTERS]
+	${ATTENDANCE_NAME}  Set Variable  AutoAttendance ${TMP}
+	#Mouse Over  ${COURSE_TOPIC_1}
+	#Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${COURSE_TOPIC_1}/..//span[text()='Add an activity or resource']
+	#Click Element  ${COURSE_TOPIC_1}/..//span[text()='Add an activity or resource']/..
+	Execute Javascript  document.getElementsByClassName('section-modchooser-text').item(1).click();
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${ACTIVITY_ADD_BTN}
+	Click Element  ${ATTENDANCE_RADIO_BTN}
+	Click Element  ${ACTIVITY_ADD_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  ${ACTIVITY_ADD_BTN}
+	Input Text  ${CHAT_NAME_TXT}  ${ATTENDANCE_NAME}
+	Sleep  5	
+	Click Element  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Run Keyword If  '${STAT}'=='True'  Click Element  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Execute Javascript  document.getElementsByClassName('section main clearfix sectiondraggable yui3-dd-drop').item(0).click();
+	Element Should Be Visible  //span[contains(text(),'${ATTENDANCE_NAME}')]	
+
+Navigate To JBLearning Application and Login
+	[Arguments]  ${USER_ID}  ${USER_PASSWORD} 
+	Go To  ${LOGINURL}
+	Set Selenium Speed  ${SEL_SPEED}	
+	${LOGIN_BTN_STAT}  Run Keyword and Return Status  Element Should Be Visible  ${LOGIN_BTN}
+	Run Keyword If  '${LOGIN_BTN_STAT}'=='True'  Click ELement  ${LOGIN_BTN}
+	Input Text  ${LOGIN_EDIT}  ${USER_ID}
+	Input Password  ${PASSWORD_EDIT}  ${USER_PASSWORD}
+	${SUBMIT_BTN_STAT}  Run Keyword and Return Status  Element Should Be Visible  ${LOGIN_SUBMIT_BTN_QA}
+	Run Keyword If  '${SUBMIT_BTN_STAT}'=='True'  Click ELement  ${LOGIN_SUBMIT_BTN_QA}  ELSE  Click Button  ${LOGIN_SUBMIT_BTN} 
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  ${SYSTEM_CHECK_CLOSE_BTN}
+	Run Keyword If  '${STAT}'=='True'  Click ELement  ${SYSTEM_CHECK_CLOSE_BTN}
+	
+Validate Browser is Ready
+	${STATE}  Execute Javascript  return document.readyState;
+	Should Be Equal  '${STATE.lower()}'  'complete'
+	
+Student Taking Quiz
+	Navigate To Home Page	
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a	
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	#Click Element  ${COURSE_DROP_DOWN_ARROW}
+	Execute Javascript  document.getElementById('section-1').click();	
+	${CUR_URL}  Get Location
+	${QUIZ_URL}  Get Element Attribute  ${COURSE_CHAPTER_1_QUIZ_LINK}@href
+	Go To  ${QUIZ_URL}
+	Wait Until Keyword Succeeds  3 min  30 sec  Validate Browser is Ready	
+	Click Element  ${EXCEL_SOFT_QUIZ_START_BTN}	
+	${SCORE_VAL}  Submitting Answers for Question
+	Go To  ${CUR_URL}
+	[Return]  ${SCORE_VAL}
+	
+Submitting Answers for Question  
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[1]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[1]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[1]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[2]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[2]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[2]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[3]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[3]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[3]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[4]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[4]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[4]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[5]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[5]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[5]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[6]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[6]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[6]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[7]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[7]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[7]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[8]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[8]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[8]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[9]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[9]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[9]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[10]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[10]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[10]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[11]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[11]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[11]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[12]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[1]/td[1]/input)[12]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[12]
+	Sleep  3
+	
+	Click Element  ${EXCEL_SOFT_QUIZ_SUBMIT_ASSESMENT_BTN}
+	Click Element  ${EXCEL_SOFT_QUIZ_YES_BTN}
+	Element Should Be Visible  ${EXCEL_SOFT_QUIZ_SUCCESS_MSG}
+	${SCORE}  Get Text  ${EXCEL_SOFT_QUIZ_SCORE}
+	Click Element  ${CLOSE_BTN}
+	[Return]  ${SCORE}	
+	
+Student Taking Final Exam  
+	Navigate To Home Page	
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a	
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	#Click Element  ${COURSE_DROP_DOWN_ARROW}
+	Execute Javascript  document.getElementById('section-1').click();	
+	#Sleep  30
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	${CUR_URL}  Get Location
+	${QUIZ_URL}  Get Element Attribute  ${COURSE_CHAPTER_1_FINAL_EXAM_LINK}@href
+	Go To  ${QUIZ_URL}
+	Wait Until Keyword Succeeds  3 min  30 sec  Validate Browser is Ready	
+	Click Element  ${EXCEL_SOFT_QUIZ_START_BTN}	
+	Submitting Answers for Question	
+	Go To  ${CUR_URL}
+	
+Student Taking Midterm Exam  
+	Navigate To Home Page	
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a	
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	#Click Element  ${COURSE_DROP_DOWN_ARROW}
+	Execute Javascript  document.getElementById('section-1').click();	
+	#Sleep  30
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	${CUR_URL}  Get Location
+	${MIDTERM1_URL}  Get Element Attribute  ${COURSE_CHAPTER_1_MIDTERM_EXAM_LINK}@href
+	Go To  ${MIDTERM1_URL}
+	Wait Until Keyword Succeeds  3 min  30 sec  Validate Browser is Ready	
+	Click Element  ${EXCEL_SOFT_QUIZ_START_BTN}	
+	Submitting Answers for Question	
+	Go To  ${CUR_URL}	
+
+Student Taking Quiz - Second Attempt
+	Navigate To Home Page	
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a	
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	#Click Element  ${COURSE_DROP_DOWN_ARROW}
+	Execute Javascript  document.getElementById('section-1').click();	
+	${CUR_URL}  Get Location
+	${QUIZ_URL}  Get Element Attribute  ${COURSE_CHAPTER_1_QUIZ_LINK}@href
+	Go To  ${QUIZ_URL}
+	Wait Until Keyword Succeeds  3 min  30 sec  Validate Browser is Ready	
+	Click Element  ${EXCEL_SOFT_QUIZ_START_BTN}	
+	${SCORE_VAL}  Submitting Answers for Question - Second Attempt
+	Go To  ${CUR_URL}
+	[Return]  ${SCORE_VAL}
+	
+Student Taking Final Exam - Second Attempt
+	Navigate To Home Page	
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a	
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	#Click Element  ${COURSE_DROP_DOWN_ARROW}
+	Execute Javascript  document.getElementById('section-1').click();	
+	${CUR_URL}  Get Location
+	${QUIZ_URL}  Get Element Attribute  ${COURSE_CHAPTER_1_FINAL_EXAM_LINK}@href
+	Go To  ${QUIZ_URL}
+	Wait Until Keyword Succeeds  3 min  30 sec  Validate Browser is Ready	
+	Click Element  ${EXCEL_SOFT_QUIZ_START_BTN}	
+	Submitting Answers for Question - Second Attempt
+	Go To  ${CUR_URL}	
+	
+Submitting Answers for Question - Second Attempt
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[1]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[1]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[1]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[2]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[2]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[2]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[3]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[3]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[3]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[4]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[4]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[4]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[5]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[5]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[5]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[6]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[6]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[6]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[7]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[7]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[7]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[8]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[8]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[8]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[9]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[9]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[9]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[10]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[10]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[10]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[11]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[11]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[11]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[12]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[2]/td[1]/input)[12]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[12]
+	Sleep  3
+	
+	Click Element  ${EXCEL_SOFT_QUIZ_SUBMIT_ASSESMENT_BTN}
+	Click Element  ${EXCEL_SOFT_QUIZ_YES_BTN}
+	Element Should Be Visible  ${EXCEL_SOFT_QUIZ_SUCCESS_MSG}
+	${SCORE}  Get Text  ${EXCEL_SOFT_QUIZ_SCORE}
+	Click Element  ${CLOSE_BTN}
+	[Return]  ${SCORE}	
+
+Student Taking Quiz - Third Attempt
+	Navigate To Home Page	
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a	
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	#Click Element  ${COURSE_DROP_DOWN_ARROW}
+	Execute Javascript  document.getElementById('section-1').click();	
+	${CUR_URL}  Get Location
+	${QUIZ_URL}  Get Element Attribute  ${COURSE_CHAPTER_1_QUIZ_LINK}@href
+	Go To  ${QUIZ_URL}
+	Wait Until Keyword Succeeds  3 min  30 sec  Validate Browser is Ready	
+	Click Element  ${EXCEL_SOFT_QUIZ_START_BTN}	
+	${SCORE_VAL}  Submitting Answers for Question - Third Attempt
+	Go To  ${CUR_URL}
+	[Return]  ${SCORE_VAL}
+	
+Student Taking Final Exam - Third Attempt
+	Navigate To Home Page	
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a	
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	#Click Element  ${COURSE_DROP_DOWN_ARROW}
+	Execute Javascript  document.getElementById('section-1').click();	
+	${CUR_URL}  Get Location
+	${QUIZ_URL}  Get Element Attribute  ${COURSE_CHAPTER_1_FINAL_EXAM_LINK}@href
+	Go To  ${QUIZ_URL}
+	Wait Until Keyword Succeeds  3 min  30 sec  Validate Browser is Ready	
+	Click Element  ${EXCEL_SOFT_QUIZ_START_BTN}	
+	Submitting Answers for Question - Third Attempt
+	Go To  ${CUR_URL}	
+	
+Submitting Answers for Question - Third Attempt
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[1]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[1]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[1]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[2]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[2]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[2]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[3]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[3]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[3]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[4]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[4]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[4]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[5]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[5]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[5]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[6]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[6]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[6]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[7]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[7]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[7]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[8]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[8]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[8]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[9]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[9]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[9]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[10]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[10]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[10]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[11]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[11]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[11]
+	Sleep  3
+	
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[12]
+	Run Keyword If  '${STAT}'=='True'  Click ELement  xpath=(//table[@id='tblChoice']/tbody/tr[3]/td[1]/input)[12]
+	Click Element  xpath=(${EXCEL_SOFT_QUIZ_NEXT_BTN})[12]
+	Sleep  3
+	
+	Click Element  ${EXCEL_SOFT_QUIZ_SUBMIT_ASSESMENT_BTN}
+	Click Element  ${EXCEL_SOFT_QUIZ_YES_BTN}
+	Element Should Be Visible  ${EXCEL_SOFT_QUIZ_SUCCESS_MSG}
+	${SCORE}  Get Text  ${EXCEL_SOFT_QUIZ_SCORE}
+	Click Element  ${CLOSE_BTN}
+	[Return]  ${SCORE}	
+
+Validate the Score - Teacher
+	Navigate To Home Page	
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a	
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	Click Element  ${GRADE_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Validate Browser is Ready
+	#${SCORE_VAL_T}  Get Text  //table[@id='lae-user-grades_CFB']/tbody/tr[2]/td[2]/span
+	${SCORE_VAL_T}  Execute Javascript  return document.getElementsByClassName('gradevalue').item(0).innerHTML;
+	[Return]  ${SCORE_VAL_T}

@@ -1,0 +1,11 @@
+*** Settings ***
+Documentation  This resource file contains test variables.
+
+*** Variables ***
+${SEL_SPEED}			    0
+${SEL_TIMEOUT}			    100
+#${BROWSER}		            firefox
+${BROWSER}			    googlechrome
+# ${BROWSER}			    safari
+# ${BROWSER}			    opera
+#${BROWSER}			    ie			

@@ -1,0 +1,45 @@
+*** Settings ***
+Documentation  Demo on Robot Framework Automation Script Development
+
+Library	 Selenium2Library  implicit_wait=10
+Library  String
+Library  BuiltIn
+Library  OperatingSystem
+Library  ExcelLibrary.py
+Library  Collections
+
+***Keywords***
+
+Get Test Data	 
+	[Arguments]  ${FILE_NAME}  ${STATUS}
+	${COLCOUNT}  Col Count  ${FILE_NAME}  0
+	${ROWCOUNT}  Row Count  ${FILE_NAME}  0
+	${REDEEM_ROW_VAL}  Set Variable  0	
+	:For  ${I}  In Range  1  ${ROWCOUNT}
+		\  ${ROW_VAL}  Read Cell  ${I}  1  0
+		\  ${REDEEM_ROW_VAL}  Run Keyword If  '${ROW_VAL.lower()}'=='incompleted'  Set Variable  ${I}
+		\  Run Keyword If  '${ROW_VAL.lower()}'=='incompleted'  Exit For Loop
+	
+	@{FIELD_NAMES}  Create List
+	@{DATA_VALS}  Create List
+	:For  ${I}  In Range  0  ${COLCOUNT}	
+		\  ${COL_VAL}  Read Cell  0  ${I}  0
+		\  Append To List  ${FIELD_NAMES}  ${COL_VAL}
+	#Log List  ${FIELD_NAMES}	
+	:For  ${I}  In Range  0  ${COLCOUNT}	
+		\  ${COL_VAL}  Read Cell  ${REDEEM_ROW_VAL}  ${I}  0
+		\  Append To List  ${DATA_VALS}  ${COL_VAL}
+	#Log List  ${DATA_VALS}
+	${DATA_DICTIONARY}  Create Dictionary
+	 :For  ${K}  In Range  0  ${COLCOUNT}
+		\  Set To Dictionary  ${DATA_DICTIONARY}  ${FIELD_NAMES[${K}]}  ${DATA_VALS[${K}]}  
+    Log Dictionary  ${DATA_DICTIONARY}
+	[Return]  ${DATA_DICTIONARY}
+	
+***Testcases***
+Reading From Excel
+	${DATA_DICTIONARY}  Get Test Data  TESTDATA.xls  InCompleted
+	Log  ${DATA_DICTIONARY['ACCESS CODES']}
+	
+	
+	

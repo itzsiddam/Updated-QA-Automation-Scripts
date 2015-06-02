@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20140930 19:11:28.404" generator="Robot 2.8.5 (Python 2.7.8 on win32)">
+<suite source="C:\Automation_Framework\TESTSUITES\ASSIGNING_ROLES_TESTSUITE.txt" id="s1" name="ASSIGNING ROLES TESTSUITE">
+<kw type="setup" name="COMMON_KEYWORDS.Setup Test Suite">
+<doc>Sets up the login Url specified test environment to execute the test suite.</doc>
+<arguments>
+<arg>${EN}</arg>
+</arguments>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${EN}'=='QA'</arg>
+<arg>Set Global Variable</arg>
+<arg>${LOGINURL}</arg>
+<arg>http://qastaging.dev.jbldev.com:8024/login/index.php</arg>
+</arguments>
+<status status="PASS" endtime="20140930 19:11:28.872" starttime="20140930 19:11:28.872"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${EN}'=='STG'</arg>
+<arg>Set Global Variable</arg>
+<arg>${LOGINURL}</arg>
+<arg>http://www.staging.jblearning.com/</arg>
+</arguments>
+<status status="PASS" endtime="20140930 19:11:28.873" starttime="20140930 19:11:28.872"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${EN}'=='PROD'</arg>
+<arg>Set Global Variable</arg>
+<arg>${LOGINURL}</arg>
+<arg>http://www.jblearning.com/</arg>
+</arguments>
+<status status="PASS" endtime="20140930 19:11:28.873" starttime="20140930 19:11:28.873"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${EN}'=='LOCAL'</arg>
+<arg>Set Global Variable</arg>
+<arg>${LOGINURL}</arg>
+<arg>http://itzsiddam.dev.jbldev.com:8024/login/index.php</arg>
+</arguments>
+<kw type="kw" name="BuiltIn.Set Global Variable">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${LOGINURL}</arg>
+<arg>http://itzsiddam.dev.jbldev.com:8024/login/index.php</arg>
+</arguments>
+<msg timestamp="20140930 19:11:28.874" level="INFO">${LOGINURL} = http://itzsiddam.dev.jbldev.com:8024/login/index.php</msg>
+<status status="PASS" endtime="20140930 19:11:28.874" starttime="20140930 19:11:28.874"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:11:28.874" starttime="20140930 19:11:28.873"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:11:28.874" starttime="20140930 19:11:28.871"></status>
+</kw>
+<test id="s1-t1" name="TC-03: Assigning Role to User - Student">
+<kw type="kw" name="COMMON_KEYWORDS.Go To JBLearning Application and Login">
+<doc></doc>
+<arguments>
+<arg>${USER_NAME}</arg>
+<arg>${PASSWORD}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Open Browser">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${LOGINURL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20140930 19:11:28.912" level="INFO">Opening browser 'googlechrome' to base url 'http://itzsiddam.dev.jbldev.com:8024/login/index.php'</msg>
+<status status="PASS" endtime="20140930 19:11:36.619" starttime="20140930 19:11:28.912"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Maximize Browser Window">
+<doc>Maximizes current browser window.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20140930 19:11:37.776" starttime="20140930 19:11:36.619"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Set Selenium Speed">
+<doc>Sets the delay in seconds that is waited after each Selenium command.</doc>
+<arguments>
+<arg>${SEL_SPEED}</arg>
+</arguments>
+<status status="PASS" endtime="20140930 19:11:37.777" starttime="20140930 19:11:37.777"></status>
+</kw>
+<kw type="kw" name="${LOGIN_BTN_STAT} = BuiltIn.Run Keyword And Return Status">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Element Should Be Visible</arg>
+<arg>${LOGIN_BTN}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Element Should Be Visible">
+<doc>Verifies that the element identified by `locator` is visible.</doc>
+<arguments>
+<arg>${LOGIN_BTN}</arg>
+</arguments>
+<msg timestamp="20140930 19:11:37.778" level="INFO">Verifying element '//a[contains(@href,"myaccount/login.aspx")]' is visible.</msg>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140930 19:11:48.866" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20140930 19:11:48.866" starttime="20140930 19:11:47.848"></status>
+</kw>
+<msg timestamp="20140930 19:11:48.867" level="FAIL">The element '//a[contains(@href,"myaccount/login.aspx")]' should be visible, but it is not.</msg>
+<status status="FAIL" endtime="20140930 19:11:48.868" starttime="20140930 19:11:37.777"></status>
+</kw>
+<msg timestamp="20140930 19:11:48.868" level="INFO">${LOGIN_BTN_STAT} = False</msg>
+<status status="PASS" endtime="20140930 19:11:48.868" starttime="20140930 19:11:37.777"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${LOGIN_BTN_STAT}'=='True'</arg>
+<arg>Click ELement</arg>
+<arg>${LOGIN_BTN}</arg>
+</arguments>
+<status status="PASS" endtime="20140930 19:11:48.868" starttime="20140930 19:11:48.868"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Input Text">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>${LOGIN_EDIT}</arg>
+<arg>${USER_ID}</arg>
+</arguments>
+<msg timestamp="20140930 19:11:48.869" level="INFO">Typing text 'admin' into text field '//input[contains(@name,'username')][@type='text']'</msg>
+<status status="PASS" endtime="20140930 19:11:49.220" starttime="20140930 19:11:48.868"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Input Password">
+<doc>Types the given password into text field identified by `locator`.</doc>
+<arguments>
+<arg>${PASSWORD_EDIT}</arg>
+<arg>${USER_PASSWORD}</arg>
+</arguments>
+<msg timestamp="20140930 19:11:49.221" level="INFO">Typing password into text field '//input[contains(@name,'password')][@type='password']'</msg>
+<status status="PASS" endtime="20140930 19:11:49.456" starttime="20140930 19:11:49.220"></status>
+</kw>
+<kw type="kw" name="${SUBMIT_BTN_STAT} = BuiltIn.Run Keyword And Return Status">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Element Should Be Visible</arg>
+<arg>${LOGIN_SUBMIT_BTN_QA}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Element Should Be Visible">
+<doc>Verifies that the element identified by `locator` is visible.</doc>
+<arguments>
+<arg>${LOGIN_SUBMIT_BTN_QA}</arg>
+</arguments>
+<msg timestamp="20140930 19:11:49.457" level="INFO">Verifying element '//input[@id='loginbtn']' is visible.</msg>
+<status status="PASS" endtime="20140930 19:11:49.591" starttime="20140930 19:11:49.456"></status>
+</kw>
+<msg timestamp="20140930 19:11:49.591" level="INFO">${SUBMIT_BTN_STAT} = True</msg>
+<status status="PASS" endtime="20140930 19:11:49.591" starttime="20140930 19:11:49.456"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${SUBMIT_BTN_STAT}'=='True'</arg>
+<arg>Click ELement</arg>
+<arg>${LOGIN_SUBMIT_BTN_QA}</arg>
+<arg>ELSE</arg>
+<arg>Click Button</arg>
+<arg>${LOGIN_SUBMIT_BTN}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${LOGIN_SUBMIT_BTN_QA}</arg>
+</arguments>
+<msg timestamp="20140930 19:11:49.592" level="INFO">Clicking element '//input[@id='loginbtn']'.</msg>
+<status status="PASS" endtime="20140930 19:11:53.892" starttime="20140930 19:11:49.592"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:11:53.893" starttime="20140930 19:11:49.591"></status>
+</kw>
+<kw type="kw" name="${STAT} = BuiltIn.Run Keyword And Return Status">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Element Should Be Visible</arg>
+<arg>${SYSTEM_CHECK_CLOSE_BTN}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Element Should Be Visible">
+<doc>Verifies that the element identified by `locator` is visible.</doc>
+<arguments>
+<arg>${SYSTEM_CHECK_CLOSE_BTN}</arg>
+</arguments>
+<msg timestamp="20140930 19:11:53.894" level="INFO">Verifying element '//span[@class='ui-icon ui-icon-closethick' and normalize-space(text())='close']' is visible.</msg>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140930 19:12:04.928" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-2.png"&gt;&lt;img src="selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20140930 19:12:04.928" starttime="20140930 19:12:03.917"></status>
+</kw>
+<msg timestamp="20140930 19:12:04.928" level="FAIL">The element '//span[@class='ui-icon ui-icon-closethick' and normalize-space(text())='close']' should be visible, but it is not.</msg>
+<status status="FAIL" endtime="20140930 19:12:04.929" starttime="20140930 19:11:53.893"></status>
+</kw>
+<msg timestamp="20140930 19:12:04.929" level="INFO">${STAT} = False</msg>
+<status status="PASS" endtime="20140930 19:12:04.929" starttime="20140930 19:11:53.893"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${STAT}'=='True'</arg>
+<arg>Click ELement</arg>
+<arg>${SYSTEM_CHECK_CLOSE_BTN}</arg>
+</arguments>
+<status status="PASS" endtime="20140930 19:12:04.930" starttime="20140930 19:12:04.929"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:12:04.930" starttime="20140930 19:11:28.911"></status>
+</kw>
+<kw type="kw" name="${USER}, ${PSWD}, ${USER_FNAME_TXT}, ${USER_LNAME_TXT} = COMMON_KEYWORDS.Create User">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="${USER} = BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${NAME_USER}'=='None'</arg>
+<arg>Generate Random String</arg>
+<arg>6</arg>
+<arg>[LOWER]</arg>
+<arg>ELSE</arg>
+<arg>Set Variable</arg>
+<arg>${NAME_USER}</arg>
+</arguments>
+<kw type="kw" name="String.Generate Random String">
+<doc>Generates a string with a desired `length` from the given `chars`.</doc>
+<arguments>
+<arg>6</arg>
+<arg>[LOWER]</arg>
+</arguments>
+<status status="PASS" endtime="20140930 19:12:04.932" starttime="20140930 19:12:04.932"></status>
+</kw>
+<msg timestamp="20140930 19:12:04.932" level="INFO">${USER} = llzuiy</msg>
+<status status="PASS" endtime="20140930 19:12:04.932" starttime="20140930 19:12:04.931"></status>
+</kw>
+<kw type="kw" name="${PSWD} = BuiltIn.Set Variable">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>Testing@123</arg>
+</arguments>
+<msg timestamp="20140930 19:12:04.933" level="INFO">${PSWD} = Testing@123</msg>
+<status status="PASS" endtime="20140930 19:12:04.932" starttime="20140930 19:12:04.932"></status>
+</kw>
+<kw type="kw" name="${ATTR_VAL} = Selenium2Library.Get Element Attribute">
+<doc>Return value of element attribute.</doc>
+<arguments>
+<arg>${SITE_ADMINISTRATION_LNK}/../..@aria-expanded</arg>
+</arguments>
+<msg timestamp="20140930 19:12:04.959" level="INFO">${ATTR_VAL} = false</msg>
+<status status="PASS" endtime="20140930 19:12:04.959" starttime="20140930 19:12:04.933"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${ATTR_VAL}'=='false'</arg>
+<arg>Click Element</arg>
+<arg>${SITE_ADMINISTRATION_LNK}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${SITE_ADMINISTRATION_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:04.960" level="INFO">Clicking element '//span[text()='Site administration']'.</msg>
+<status status="PASS" endtime="20140930 19:12:05.062" starttime="20140930 19:12:04.960"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:12:05.062" starttime="20140930 19:12:04.959"></status>
+</kw>
+<kw type="kw" name="${USERS_ATTR_VAL} = Selenium2Library.Get Element Attribute">
+<doc>Return value of element attribute.</doc>
+<arguments>
+<arg>${SITE_ADMINISTRATION_USERS_LNK}/../..@aria-expanded</arg>
+</arguments>
+<msg timestamp="20140930 19:12:05.090" level="INFO">${USERS_ATTR_VAL} = false</msg>
+<status status="PASS" endtime="20140930 19:12:05.090" starttime="20140930 19:12:05.062"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${USERS_ATTR_VAL}'=='false'</arg>
+<arg>Click Element</arg>
+<arg>${SITE_ADMINISTRATION_USERS_LNK}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${SITE_ADMINISTRATION_USERS_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:05.091" level="INFO">Clicking element '//span[text()='Site administration']/../..//span[text()='Users']'.</msg>
+<status status="PASS" endtime="20140930 19:12:05.143" starttime="20140930 19:12:05.091"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:12:05.144" starttime="20140930 19:12:05.090"></status>
+</kw>
+<kw type="kw" name="${ACNTS_ATTR_VAL} = Selenium2Library.Get Element Attribute">
+<doc>Return value of element attribute.</doc>
+<arguments>
+<arg>${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}/../..@aria-expanded</arg>
+</arguments>
+<msg timestamp="20140930 19:12:05.167" level="INFO">${ACNTS_ATTR_VAL} = false</msg>
+<status status="PASS" endtime="20140930 19:12:05.167" starttime="20140930 19:12:05.144"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${ACNTS_ATTR_VAL}'=='false'</arg>
+<arg>Click Element</arg>
+<arg>${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:05.168" level="INFO">Clicking element '//span[text()='Accounts']'.</msg>
+<status status="PASS" endtime="20140930 19:12:05.281" starttime="20140930 19:12:05.167"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:12:05.281" starttime="20140930 19:12:05.167"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${ADD_USER_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:05.281" level="INFO">Clicking element '//a[contains(text(),'Add a new user')]'.</msg>
+<status status="PASS" endtime="20140930 19:12:09.856" starttime="20140930 19:12:05.281"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Wait Until Keyword Succeeds">
+<doc>Waits until the specified keyword succeeds or the given timeout expires.</doc>
+<arguments>
+<arg>2 min</arg>
+<arg>15 sec</arg>
+<arg>Element Should Be Visible</arg>
+<arg>${USERNAME_TXT}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Element Should Be Visible">
+<doc>Verifies that the element identified by `locator` is visible.</doc>
+<arguments>
+<arg>${USERNAME_TXT}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:09.857" level="INFO">Verifying element 'id_username' is visible.</msg>
+<status status="PASS" endtime="20140930 19:12:10.008" starttime="20140930 19:12:09.856"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:12:10.008" starttime="20140930 19:12:09.856"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Input Text">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>${USERNAME_TXT}</arg>
+<arg>${USER}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:10.009" level="INFO">Typing text 'llzuiy' into text field 'id_username'</msg>
+<status status="PASS" endtime="20140930 19:12:10.482" starttime="20140930 19:12:10.009"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Input Text">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>${PASSWORD_TXT}</arg>
+<arg>${PSWD}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:10.483" level="INFO">Typing text 'Testing@123' into text field 'id_newpassword'</msg>
+<status status="PASS" endtime="20140930 19:12:11.439" starttime="20140930 19:12:10.482"></status>
+</kw>
+<kw type="kw" name="${TMP} = String.Generate Random String">
+<doc>Generates a string with a desired `length` from the given `chars`.</doc>
+<arguments>
+<arg>4</arg>
+<arg>[LETTERS]</arg>
+</arguments>
+<msg timestamp="20140930 19:12:11.451" level="INFO">${TMP} = GDlr</msg>
+<status status="PASS" endtime="20140930 19:12:11.451" starttime="20140930 19:12:11.439"></status>
+</kw>
+<kw type="kw" name="${USER_FNAME_TXT} = BuiltIn.Set Variable">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>AutoF ${TMP}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:11.452" level="INFO">${USER_FNAME_TXT} = AutoF GDlr</msg>
+<status status="PASS" endtime="20140930 19:12:11.452" starttime="20140930 19:12:11.452"></status>
+</kw>
+<kw type="kw" name="${USER_LNAME_TXT} = BuiltIn.Set Variable">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>AutoL ${TMP}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:11.452" level="INFO">${USER_LNAME_TXT} = AutoL GDlr</msg>
+<status status="PASS" endtime="20140930 19:12:11.452" starttime="20140930 19:12:11.452"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Input Text">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>${USER_FIRSTNAME_TXT}</arg>
+<arg>${USER_FNAME_TXT}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:11.453" level="INFO">Typing text 'AutoF GDlr' into text field 'id_firstname'</msg>
+<status status="PASS" endtime="20140930 19:12:12.318" starttime="20140930 19:12:11.453"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Input Text">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>${USER_LASTNAME_TXT}</arg>
+<arg>${USER_LNAME_TXT}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:12.318" level="INFO">Typing text 'AutoL GDlr' into text field 'id_lastname'</msg>
+<status status="PASS" endtime="20140930 19:12:12.474" starttime="20140930 19:12:12.318"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Input Text">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>${USER_EMAIL_TXT}</arg>
+<arg>Auto${TMP}@nomail.com</arg>
+</arguments>
+<msg timestamp="20140930 19:12:12.475" level="INFO">Typing text 'AutoGDlr@nomail.com' into text field 'id_email'</msg>
+<status status="PASS" endtime="20140930 19:12:13.052" starttime="20140930 19:12:12.475"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Input Text">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>${USER_CITY_TXT}</arg>
+<arg>Boston</arg>
+</arguments>
+<msg timestamp="20140930 19:12:13.052" level="INFO">Typing text 'Boston' into text field 'id_city'</msg>
+<status status="PASS" endtime="20140930 19:12:13.439" starttime="20140930 19:12:13.052"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Select From List">
+<doc>Selects `*items` from list identified by `locator`</doc>
+<arguments>
+<arg>${USER_COUNTRY_DROPDOWN}</arg>
+<arg>United States</arg>
+</arguments>
+<msg timestamp="20140930 19:12:13.440" level="INFO">Selecting option(s) 'United States' from list 'id_country'.</msg>
+<status status="PASS" endtime="20140930 19:12:23.713" starttime="20140930 19:12:13.440"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${CREATE_USER_BTN}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:23.715" level="INFO">Clicking element '//input[@value='Create user']'.</msg>
+<status status="PASS" endtime="20140930 19:12:28.836" starttime="20140930 19:12:23.713"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Element Should Be Visible">
+<doc>Verifies that the element identified by `locator` is visible.</doc>
+<arguments>
+<arg>//a[text()='${USER_FNAME_TXT} ${USER_LNAME_TXT}']</arg>
+</arguments>
+<msg timestamp="20140930 19:12:28.837" level="INFO">Verifying element '//a[text()='AutoF GDlr AutoL GDlr']' is visible.</msg>
+<status status="PASS" endtime="20140930 19:12:28.995" starttime="20140930 19:12:28.836"></status>
+</kw>
+<msg timestamp="20140930 19:12:28.995" level="INFO">${USER} = llzuiy</msg>
+<msg timestamp="20140930 19:12:28.995" level="INFO">${PSWD} = Testing@123</msg>
+<msg timestamp="20140930 19:12:28.996" level="INFO">${USER_FNAME_TXT} = AutoF GDlr</msg>
+<msg timestamp="20140930 19:12:28.996" level="INFO">${USER_LNAME_TXT} = AutoL GDlr</msg>
+<status status="PASS" endtime="20140930 19:12:28.995" starttime="20140930 19:12:04.930"></status>
+</kw>
+<kw type="kw" name="${USER_F_L_NAME} = BuiltIn.Set Variable">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${USER_FNAME_TXT} ${USER_LNAME_TXT}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:28.996" level="INFO">${USER_F_L_NAME} = AutoF GDlr AutoL GDlr</msg>
+<status status="PASS" endtime="20140930 19:12:28.996" starttime="20140930 19:12:28.996"></status>
+</kw>
+<kw type="kw" name="COMMON_KEYWORDS.Navigate To Home Page">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="${URL} = String.Replace String">
+<doc>Replaces `search_for` in the given `string` with `replace_with`.</doc>
+<arguments>
+<arg>${LOGINURL}</arg>
+<arg>/login/index.php</arg>
+<arg>${EMPTY}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:28.998" level="INFO">${URL} = http://itzsiddam.dev.jbldev.com:8024</msg>
+<status status="PASS" endtime="20140930 19:12:28.998" starttime="20140930 19:12:28.997"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Go To">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${URL}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:28.998" level="INFO">Opening url 'http://itzsiddam.dev.jbldev.com:8024'</msg>
+<status status="PASS" endtime="20140930 19:12:31.563" starttime="20140930 19:12:28.998"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:12:31.563" starttime="20140930 19:12:28.997"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword And Continue On Failure">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>Assign Role To the User</arg>
+<arg>${USER_F_L_NAME}</arg>
+<arg>Student</arg>
+</arguments>
+<kw type="kw" name="COMMON_KEYWORDS.Assign Role To the User">
+<doc></doc>
+<arguments>
+<arg>${USER_F_L_NAME}</arg>
+<arg>Student</arg>
+</arguments>
+<kw type="kw" name="${FRONT_PAGE_SETTINGS_ATTR_VAL} = Selenium2Library.Get Element Attribute">
+<doc>Return value of element attribute.</doc>
+<arguments>
+<arg>${FRONT_PAGE_SETTINGS_LNK}/../..@aria-expanded</arg>
+</arguments>
+<msg timestamp="20140930 19:12:31.626" level="INFO">${FRONT_PAGE_SETTINGS_ATTR_VAL} = true</msg>
+<status status="PASS" endtime="20140930 19:12:31.626" starttime="20140930 19:12:31.564"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${FRONT_PAGE_SETTINGS_ATTR_VAL}'=='false'</arg>
+<arg>Click Element</arg>
+<arg>${FRONT_PAGE_SETTINGS_LNK}</arg>
+</arguments>
+<status status="PASS" endtime="20140930 19:12:31.627" starttime="20140930 19:12:31.626"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${TURN_EDITING_ON_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:31.627" level="INFO">Clicking element '//a[contains(text(),'Turn editing on')]'.</msg>
+<status status="PASS" endtime="20140930 19:12:35.862" starttime="20140930 19:12:31.627"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Wait Until Keyword Succeeds">
+<doc>Waits until the specified keyword succeeds or the given timeout expires.</doc>
+<arguments>
+<arg>2 min</arg>
+<arg>15 sec</arg>
+<arg>Element Should Be Visible</arg>
+<arg>${TURN_EDITING_OFF_LNK}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Element Should Be Visible">
+<doc>Verifies that the element identified by `locator` is visible.</doc>
+<arguments>
+<arg>${TURN_EDITING_OFF_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:35.863" level="INFO">Verifying element '//a[contains(text(),'Turn editing off')]' is visible.</msg>
+<status status="PASS" endtime="20140930 19:12:35.909" starttime="20140930 19:12:35.863"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:12:35.909" starttime="20140930 19:12:35.862"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=(//div[@class='coursebox clearfix'])[1]//h3/a</arg>
+</arguments>
+<msg timestamp="20140930 19:12:35.909" level="INFO">Clicking element 'xpath=(//div[@class='coursebox clearfix'])[1]//h3/a'.</msg>
+<status status="PASS" endtime="20140930 19:12:39.846" starttime="20140930 19:12:35.909"></status>
+</kw>
+<kw type="kw" name="${ATTR_VAL} = Selenium2Library.Get Element Attribute">
+<doc>Return value of element attribute.</doc>
+<arguments>
+<arg>${COURSE_ADMINISTRATION_LNK}/../..@aria-expanded</arg>
+</arguments>
+<msg timestamp="20140930 19:12:40.572" level="INFO">${ATTR_VAL} = true</msg>
+<status status="PASS" endtime="20140930 19:12:40.572" starttime="20140930 19:12:39.846"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${ATTR_VAL}'=='false'</arg>
+<arg>Click Element</arg>
+<arg>${COURSE_ADMINISTRATION_LNK}</arg>
+</arguments>
+<status status="PASS" endtime="20140930 19:12:40.573" starttime="20140930 19:12:40.572"></status>
+</kw>
+<kw type="kw" name="${USERS_ATTR_VAL} = Selenium2Library.Get Element Attribute">
+<doc>Return value of element attribute.</doc>
+<arguments>
+<arg>${COURSE_ADMINISTRATION_USERS_LNK}/../..@aria-expanded</arg>
+</arguments>
+<msg timestamp="20140930 19:12:40.793" level="INFO">${USERS_ATTR_VAL} = false</msg>
+<status status="PASS" endtime="20140930 19:12:40.793" starttime="20140930 19:12:40.573"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${USERS_ATTR_VAL}'=='false'</arg>
+<arg>Click Element</arg>
+<arg>${COURSE_ADMINISTRATION_USERS_LNK}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${COURSE_ADMINISTRATION_USERS_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:40.794" level="INFO">Clicking element '//span[text()='Course administration']/../..//span[text()='Users']'.</msg>
+<status status="PASS" endtime="20140930 19:12:40.963" starttime="20140930 19:12:40.793"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:12:40.963" starttime="20140930 19:12:40.793"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${ENROLLED_USERS_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:40.964" level="INFO">Clicking element '//a[contains(text(),'Enrolled users')]'.</msg>
+<status status="PASS" endtime="20140930 19:12:44.546" starttime="20140930 19:12:40.964"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${ENROL_USERS_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:44.547" level="INFO">Clicking element 'xpath=(//input[@value='Enrol users'])[1]'.</msg>
+<status status="PASS" endtime="20140930 19:12:49.173" starttime="20140930 19:12:44.546"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Wait Until Keyword Succeeds">
+<doc>Waits until the specified keyword succeeds or the given timeout expires.</doc>
+<arguments>
+<arg>2 min</arg>
+<arg>15 sec</arg>
+<arg>Element Should Be Visible</arg>
+<arg>${ENROL_USER_SEARCH_TXT}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Element Should Be Visible">
+<doc>Verifies that the element identified by `locator` is visible.</doc>
+<arguments>
+<arg>${ENROL_USER_SEARCH_TXT}</arg>
+</arguments>
+<msg timestamp="20140930 19:12:49.174" level="INFO">Verifying element 'enrolusersearch' is visible.</msg>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140930 19:13:00.577" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-3.png"&gt;&lt;img src="selenium-screenshot-3.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20140930 19:13:00.577" starttime="20140930 19:12:59.299"></status>
+</kw>
+<msg timestamp="20140930 19:13:00.578" level="FAIL">The element 'enrolusersearch' should be visible, but it is not.</msg>
+<status status="FAIL" endtime="20140930 19:13:00.578" starttime="20140930 19:12:49.174"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Element Should Be Visible">
+<doc>Verifies that the element identified by `locator` is visible.</doc>
+<arguments>
+<arg>${ENROL_USER_SEARCH_TXT}</arg>
+</arguments>
+<msg timestamp="20140930 19:13:15.578" level="INFO">Verifying element 'enrolusersearch' is visible.</msg>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140930 19:13:26.964" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-4.png"&gt;&lt;img src="selenium-screenshot-4.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20140930 19:13:26.964" starttime="20140930 19:13:25.605"></status>
+</kw>
+<msg timestamp="20140930 19:13:26.965" level="FAIL">The element 'enrolusersearch' should be visible, but it is not.</msg>
+<status status="FAIL" endtime="20140930 19:13:26.965" starttime="20140930 19:13:15.578"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Element Should Be Visible">
+<doc>Verifies that the element identified by `locator` is visible.</doc>
+<arguments>
+<arg>${ENROL_USER_SEARCH_TXT}</arg>
+</arguments>
+<msg timestamp="20140930 19:13:41.965" level="INFO">Verifying element 'enrolusersearch' is visible.</msg>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140930 19:13:52.853" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-5.png"&gt;&lt;img src="selenium-screenshot-5.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20140930 19:13:52.853" starttime="20140930 19:13:52.018"></status>
+</kw>
+<msg timestamp="20140930 19:13:52.853" level="FAIL">The element 'enrolusersearch' should be visible, but it is not.</msg>
+<status status="FAIL" endtime="20140930 19:13:52.854" starttime="20140930 19:13:41.965"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Element Should Be Visible">
+<doc>Verifies that the element identified by `locator` is visible.</doc>
+<arguments>
+<arg>${ENROL_USER_SEARCH_TXT}</arg>
+</arguments>
+<msg timestamp="20140930 19:14:07.854" level="INFO">Verifying element 'enrolusersearch' is visible.</msg>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140930 19:14:19.102" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-6.png"&gt;&lt;img src="selenium-screenshot-6.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20140930 19:14:19.102" starttime="20140930 19:14:17.887"></status>
+</kw>
+<msg timestamp="20140930 19:14:19.102" level="FAIL">The element 'enrolusersearch' should be visible, but it is not.</msg>
+<status status="FAIL" endtime="20140930 19:14:19.103" starttime="20140930 19:14:07.854"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Element Should Be Visible">
+<doc>Verifies that the element identified by `locator` is visible.</doc>
+<arguments>
+<arg>${ENROL_USER_SEARCH_TXT}</arg>
+</arguments>
+<msg timestamp="20140930 19:14:34.106" level="INFO">Verifying element 'enrolusersearch' is visible.</msg>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140930 19:14:45.176" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-7.png"&gt;&lt;img src="selenium-screenshot-7.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20140930 19:14:45.176" starttime="20140930 19:14:44.115"></status>
+</kw>
+<msg timestamp="20140930 19:14:45.177" level="FAIL">The element 'enrolusersearch' should be visible, but it is not.</msg>
+<status status="FAIL" endtime="20140930 19:14:45.177" starttime="20140930 19:14:34.104"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Element Should Be Visible">
+<doc>Verifies that the element identified by `locator` is visible.</doc>
+<arguments>
+<arg>${ENROL_USER_SEARCH_TXT}</arg>
+</arguments>
+<msg timestamp="20140930 19:15:00.179" level="INFO">Verifying element 'enrolusersearch' is visible.</msg>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140930 19:15:11.019" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-8.png"&gt;&lt;img src="selenium-screenshot-8.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20140930 19:15:11.019" starttime="20140930 19:15:10.200"></status>
+</kw>
+<msg timestamp="20140930 19:15:11.019" level="FAIL">The element 'enrolusersearch' should be visible, but it is not.</msg>
+<status status="FAIL" endtime="20140930 19:15:11.019" starttime="20140930 19:15:00.178"></status>
+</kw>
+<msg timestamp="20140930 19:15:11.021" level="FAIL">Timeout 2 minutes exceeded. The last error was: The element 'enrolusersearch' should be visible, but it is not.</msg>
+<status status="FAIL" endtime="20140930 19:15:11.021" starttime="20140930 19:12:49.173"></status>
+</kw>
+<status status="FAIL" endtime="20140930 19:15:11.021" starttime="20140930 19:12:31.563"></status>
+</kw>
+<status status="FAIL" endtime="20140930 19:15:11.021" starttime="20140930 19:12:31.563"></status>
+</kw>
+<kw type="kw" name="COMMON_KEYWORDS.Delete User">
+<doc></doc>
+<arguments>
+<arg>${USER_F_L_NAME}</arg>
+</arguments>
+<kw type="kw" name="COMMON_KEYWORDS.Navigate To Home Page">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="${URL} = String.Replace String">
+<doc>Replaces `search_for` in the given `string` with `replace_with`.</doc>
+<arguments>
+<arg>${LOGINURL}</arg>
+<arg>/login/index.php</arg>
+<arg>${EMPTY}</arg>
+</arguments>
+<msg timestamp="20140930 19:15:11.023" level="INFO">${URL} = http://itzsiddam.dev.jbldev.com:8024</msg>
+<status status="PASS" endtime="20140930 19:15:11.023" starttime="20140930 19:15:11.023"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Go To">
+<doc>Navigates the active browser instance to the provided URL.</doc>
+<arguments>
+<arg>${URL}</arg>
+</arguments>
+<msg timestamp="20140930 19:15:11.024" level="INFO">Opening url 'http://itzsiddam.dev.jbldev.com:8024'</msg>
+<status status="PASS" endtime="20140930 19:15:14.351" starttime="20140930 19:15:11.024"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:15:14.352" starttime="20140930 19:15:11.022"></status>
+</kw>
+<kw type="kw" name="${ATTR_VAL} = Selenium2Library.Get Element Attribute">
+<doc>Return value of element attribute.</doc>
+<arguments>
+<arg>${SITE_ADMINISTRATION_LNK}/../..@aria-expanded</arg>
+</arguments>
+<msg timestamp="20140930 19:15:14.381" level="INFO">${ATTR_VAL} = false</msg>
+<status status="PASS" endtime="20140930 19:15:14.381" starttime="20140930 19:15:14.352"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${ATTR_VAL}'=='false'</arg>
+<arg>Click Element</arg>
+<arg>${SITE_ADMINISTRATION_LNK}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${SITE_ADMINISTRATION_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:15:14.382" level="INFO">Clicking element '//span[text()='Site administration']'.</msg>
+<status status="PASS" endtime="20140930 19:15:14.548" starttime="20140930 19:15:14.382"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:15:14.548" starttime="20140930 19:15:14.381"></status>
+</kw>
+<kw type="kw" name="${USERS_ATTR_VAL} = Selenium2Library.Get Element Attribute">
+<doc>Return value of element attribute.</doc>
+<arguments>
+<arg>${SITE_ADMINISTRATION_USERS_LNK}/../..@aria-expanded</arg>
+</arguments>
+<msg timestamp="20140930 19:15:14.614" level="INFO">${USERS_ATTR_VAL} = false</msg>
+<status status="PASS" endtime="20140930 19:15:14.614" starttime="20140930 19:15:14.548"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${USERS_ATTR_VAL}'=='false'</arg>
+<arg>Click Element</arg>
+<arg>${SITE_ADMINISTRATION_USERS_LNK}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${SITE_ADMINISTRATION_USERS_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:15:14.617" level="INFO">Clicking element '//span[text()='Site administration']/../..//span[text()='Users']'.</msg>
+<status status="PASS" endtime="20140930 19:15:14.732" starttime="20140930 19:15:14.616"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:15:14.732" starttime="20140930 19:15:14.614"></status>
+</kw>
+<kw type="kw" name="${ACNTS_ATTR_VAL} = Selenium2Library.Get Element Attribute">
+<doc>Return value of element attribute.</doc>
+<arguments>
+<arg>${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}/../..@aria-expanded</arg>
+</arguments>
+<msg timestamp="20140930 19:15:14.783" level="INFO">${ACNTS_ATTR_VAL} = false</msg>
+<status status="PASS" endtime="20140930 19:15:14.783" starttime="20140930 19:15:14.732"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${ACNTS_ATTR_VAL}'=='false'</arg>
+<arg>Click Element</arg>
+<arg>${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:15:14.784" level="INFO">Clicking element '//span[text()='Accounts']'.</msg>
+<status status="PASS" endtime="20140930 19:15:14.891" starttime="20140930 19:15:14.784"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:15:14.891" starttime="20140930 19:15:14.783"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${BROWSE_LIST_OF_USERS_LNK}</arg>
+</arguments>
+<msg timestamp="20140930 19:15:14.891" level="INFO">Clicking element '//a[contains(text(),'Browse list of users')]'.</msg>
+<status status="PASS" endtime="20140930 19:15:17.722" starttime="20140930 19:15:14.891"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>//a[text()='${NAME_USER}']/../../td[6]/a[@title='Delete']</arg>
+</arguments>
+<msg timestamp="20140930 19:15:17.722" level="INFO">Clicking element '//a[text()='AutoF GDlr AutoL GDlr']/../../td[6]/a[@title='Delete']'.</msg>
+<status status="PASS" endtime="20140930 19:15:20.268" starttime="20140930 19:15:17.722"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${CONTINUE_BTN}</arg>
+</arguments>
+<msg timestamp="20140930 19:15:20.269" level="INFO">Clicking element '//input[@value='Continue']'.</msg>
+<status status="PASS" endtime="20140930 19:15:24.563" starttime="20140930 19:15:20.269"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Element Should Not Be Visible">
+<doc>Verifies that the element identified by `locator` is NOT visible.</doc>
+<arguments>
+<arg>//a[text()='${NAME_USER}']</arg>
+</arguments>
+<msg timestamp="20140930 19:15:24.563" level="INFO">Verifying element '//a[text()='AutoF GDlr AutoL GDlr']' is not visible.</msg>
+<status status="PASS" endtime="20140930 19:15:34.566" starttime="20140930 19:15:24.563"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:15:34.566" starttime="20140930 19:15:11.021"></status>
+</kw>
+<kw type="teardown" name="COMMON_KEYWORDS.Wrap Up Test">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="COMMON_KEYWORDS.Log out of JBLearning Application">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${LOGOUT_BTN}</arg>
+</arguments>
+<msg timestamp="20140930 19:15:34.569" level="INFO">Clicking element '//a[contains(@id,"Logout") or @title='Logout']'.</msg>
+<status status="PASS" endtime="20140930 19:15:36.389" starttime="20140930 19:15:34.568"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:15:36.389" starttime="20140930 19:15:34.567"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Close Window">
+<doc>Closes currently opened pop-up window.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20140930 19:15:37.634" starttime="20140930 19:15:36.390"></status>
+</kw>
+<status status="PASS" endtime="20140930 19:15:37.635" starttime="20140930 19:15:34.567"></status>
+</kw>
+<doc></doc>
+<tags>
+<tag>this</tag>
+<tag>USER-ROLE</tag>
+</tags>
+<status status="FAIL" endtime="20140930 19:15:37.639" critical="yes" starttime="20140930 19:11:28.874">Timeout 2 minutes exceeded. The last error was: The element 'enrolusersearch' should be visible, but it is not.</status>
+</test>
+<doc></doc>
+<metadata>
+</metadata>
+<status status="FAIL" endtime="20140930 19:15:37.640" starttime="20140930 19:11:28.404"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="1" pass="0">Critical Tests</stat>
+<stat fail="1" pass="0">All Tests</stat>
+</total>
+<tag>
+<stat info="" links="" doc="" combined="" pass="0" fail="1">this</stat>
+<stat info="" links="" doc="" combined="" pass="0" fail="1">USER-ROLE</stat>
+</tag>
+<suite>
+<stat fail="1" pass="0" id="s1" name="ASSIGNING ROLES TESTSUITE">ASSIGNING ROLES TESTSUITE</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

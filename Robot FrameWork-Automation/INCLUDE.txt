@@ -1,0 +1,13 @@
+*** Settings ***
+Documentation  testing
+
+Library	 Selenium2Library  implicit_wait=10
+Library	 String
+Library	 Collections
+Library  OperatingSystem
+
+
+Resource  COMMON.txt
+
+Resource  COMMON_OBJECTS.txt
+Resource  COMMON_KEYWORDS.txt

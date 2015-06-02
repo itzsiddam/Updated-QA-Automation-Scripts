@@ -1,0 +1,73 @@
+*** Settings ***
+Documentation  This resource file contains locator definitions for common web ojects within 
+
+*** Variables ***
+${LOGIN_BTN}                                  	 	//a[contains(@href,"myaccount/login.aspx")]
+${LOGIN_EDIT}   							 		//input[contains(@name,'username')][@type='text']  
+${PASSWORD_EDIT}   							  		//input[contains(@name,'password')][@type='password']
+${LOGIN_SUBMIT_BTN}   							  	//input[contains(@name,'login') and @value='Submit']
+${LOGIN_SUBMIT_BTN_QA}   						 	//input[@id='loginbtn']
+${SYSTEM_CHECK_CLOSE_BTN}						  	xpath=(//span[@class='ui-icon ui-icon-closethick' and normalize-space(text())='close'])[last()]   #//span[@class='ui-icon ui-icon-closethick' and normalize-space(text())='close']
+${LOGOUT_BTN}								 		//a[contains(@id,"Logout") or @title='Logout']
+${USER_NAME}							          	admin
+#${PASSWORD}								        r0}Yu-x9jIo5Z3wQ+se%
+${PASSWORD}								        	Ascend_1
+${USER_NAME_TEACHER}							  	sriteacher
+${PASSWORD_TEACHER}						          	Sriteacher_1
+${USER_NAME_STUDENT}						      	sriuser1024
+${PASSWORD_STUDENT}						          	Sriuser_1024
+${SITE_ADMINISTRATION_LNK}						  	//span[text()='Site administration']
+${SITE_ADMINISTRATION_USERS_LNK}				   	${SITE_ADMINISTRATION_LNK}/../..//span[text()='Users']
+${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}		  	//span[text()='Accounts']
+${ADD_USER_LNK}							          	//a[contains(text(),'Add a new user')]
+${USERNAME_TXT}							          	id_username
+${PASSWORD_TXT}							          	id_newpassword
+${USER_FIRSTNAME_TXT}							  	id_firstname
+${USER_LASTNAME_TXT}							  	id_lastname
+${USER_EMAIL_TXT}						          	id_email
+${USER_CITY_TXT}						          	id_city
+${USER_COUNTRY_DROPDOWN}						  	id_country
+${CREATE_USER_BTN}						         	//input[@value='Create user']
+${HOME_COURSES_BTN}								    xpath=(//a[text()='Courses'])[1]
+${BLOCKACTIVITY_ADS_EDITING_OFF_BTN}				//input[@value='Blocks editing off']
+${FRONT_PAGE_SETTINGS_LNK}						  	//span[text()='Front page settings']
+${TURN_EDITING_ON_LNK}								//a[contains(text(),'Turn editing on')]
+${TURN_EDITING_OFF_LNK}								//a[contains(text(),'Turn editing off')]
+${COURSE_ADMINISTRATION_LNK}						//span[text()='Course administration']
+${COURSE_ADMINISTRATION_USERS_LNK}				   	${COURSE_ADMINISTRATION_LNK}/../..//span[text()='Users']
+${USERS_ENROLLMENT_METHODS_LNK}						//a[text()='Enrolment methods']
+${ENRL_METHODS_MANUAL_ENRLMNT_LNK}					xpath=(//a[contains(text(),'Manual enrolments')])[1]
+${ENROLLED_USERS_LNK}								//a[contains(text(),'Enrolled users')]
+${ENROL_USERS_LNK}								    xpath=(//input[@value='Enrol users'])[1]
+${ENROL_USER_SEARCH_TXT}							enrolusersearch
+${ENROL_USER_SEARCH_BTN}							searchbtn
+${ASSIGN_ROLE_DROPDOWN}								id_enrol_manual_assignable_roles
+${FINISH_ENROLL_USERS_BTN}							//input[@value='Finish enrolling users']
+${BROWSE_LIST_OF_USERS_LNK}							//a[contains(text(),'Browse list of users')]
+${CONTINUE_BTN}									    //input[@value='Continue']
+${COURSE_TOPIC_1}								    xpath=(//h3[@class='sectionname'])[2]     #//h3[text()='Topic 1']
+${ACTIVITY_ADD_BTN}								    //input[@value='Add']
+${CHAT_RADIO_BTN}								    module_chat
+${CHAT_NAME_TXT}								    id_name
+${CHAT_DESCRIPTION_IFRAME}							id_introeditor_ifr
+${CHAT_DESCRIPTION_BODY}							tinymce
+${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}				//input[@value='Save and return to course']
+#${COURSE_TOPIC_1}								    //h3[text()='Topic 1']
+#${ACTIVITY_ADD_BTN}								//input[@value="Add']
+${FORUM_RADIO_BTN}								    module_forum
+${ATTENDANCE_RADIO_BTN}								module_attforblock
+${USERS_MULTI_SELECT_DROPDOWN}						//select[@id='addselect']
+${ASSIGN_ROLE_DROPDOWN_1}							menuroleid
+${USER_ADD_BTN}										add
+${COURSE_DROP_DOWN_ARROW}							section-1
+${COURSE_CHAPTER_1_QUIZ_LINK}						//span[contains(text(),'Quiz')]/..
+${EXCEL_SOFT_QUIZ_START_BTN}						//span[@id='btnValue'][text()='Start']
+${EXCEL_SOFT_QUIZ_NEXT_BTN}							//div[@title='Next']
+${EXCEL_SOFT_QUIZ_SUBMIT_ASSESMENT_BTN}				//span[text()='Submit Assessment']/..
+${EXCEL_SOFT_QUIZ_YES_BTN}							//span[@id='btnValue' and text()='Yes']
+${EXCEL_SOFT_QUIZ_SUCCESS_MSG}						//span[text()='You have successfully completed the assessment.']
+${CLOSE_BTN}						                xpath=(//span[@id='spnClose' and text()='Close'])[2]
+${EXCEL_SOFT_QUIZ_SCORE}							//td[text()='SCORE:']/following-sibling::td[1]
+${COURSE_CHAPTER_1_FINAL_EXAM_LINK}					xpath=(//span[text()='Final Exam 1']/..)[1]      #xpath=(//span[text()='Final Exam']/..)[1]       #xpath=(//span[contains(text(),'Final')]/..)[1]
+${GRADE_BTN}						                xpath=(//a[text()='Gradebook'])[1]
+${COURSE_CHAPTER_1_MIDTERM_EXAM_LINK}				xpath=(//span[text()='Midterm 1']/..)[1]

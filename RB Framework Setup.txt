@@ -1,0 +1,26 @@
+1. Python should be installed
+2. Set the path in the environment variables
+    -- Right click on my computer and click on properties
+    -- Click on Advane System Settings tab and click on advanced tab
+    -- Click on Environment Variable button
+    -- If no variable exists with name PATH, then create a new variable and assign python installed location to that variable.
+    -- If already a variable exists with name PATH, then make sure that python path is set in that variable
+3. Download and install python distribute package
+4. Download and install python pip package
+5. Download and install python decorator package
+6. Download and install python docutilspackage
+7. Download and install python robotframework package
+8. Download and install python seleniumpackage
+9. Download and install python robotframework-selenium2library package
+10.Download and install python xlrd package
+11. Download and install python xlutils package
+12. Download and install python xlwt package
+
+Instructions to install steps 3 to 9
+ 
+a) download the package and extract it
+b) open command prompt and go to the folder where files were extracted
+c) run command: python setup.py install
+ 
+Once you done with above steps, set PATH variable with value as C:\Python27;C:\Python27\Scripts;C:\Python27\Lib\site-packages in environment variables
+Execute pybot --version in command prompt, you would see the Robot framework version.

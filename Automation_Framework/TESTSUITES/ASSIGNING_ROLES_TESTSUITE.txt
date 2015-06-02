@@ -1,0 +1,83 @@
+*** Settings ***
+Documentation  
+Resource  ../COMMON/INCLUDE.txt
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Suite Setup  Setup Test Suite  ${EN}
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*** Test Cases ***
+TC-01: Create a User
+	## Start Test 
+    ## Test Case For Create User
+    [Tags]  USER-CREATION 
+	##################################################################################################
+	Go To JBLearning Application and Login  ${USER_NAME}  ${PASSWORD}
+	${USER}  ${PSWD}  ${USER_FNAME_TXT}  ${USER_LNAME_TXT}  Create User
+	${USER_F_L_NAME}  Set Variable  ${USER_FNAME_TXT} ${USER_LNAME_TXT}
+	Delete User  ${USER_F_L_NAME}
+	##End Test
+	###################################################################################################
+	[Teardown]  Wrap Up Test	
+	
+TC-02: Assigning Role to User - Teacher
+	## Start Test 
+    ## Test Case For Assigning Role To User 
+   [Tags]  USER-ROLE
+	##################################################################################################
+	Go To JBLearning Application and Login  ${USER_NAME}  ${PASSWORD}
+	${USER}  ${PSWD}  ${USER_FNAME_TXT}  ${USER_LNAME_TXT}  Create User
+	${USER_F_L_NAME}  Set Variable  ${USER_FNAME_TXT} ${USER_LNAME_TXT}
+	Navigate To Home Page
+	Run Keyword And Continue On Failure  Assign Role To the User  ${USER_F_L_NAME}  Teacher
+	Delete User  ${USER_F_L_NAME}
+	##End Test
+	###################################################################################################
+	#[Teardown]  Wrap Up Test	
+	
+TC-03: Assigning Role to User - Student
+	## Start Test 
+    ## Test Case For Assigning Role To User 
+   [Tags]  USER-ROLE  this
+	##################################################################################################
+	Go To JBLearning Application and Login  ${USER_NAME}  ${PASSWORD}
+	${USER}  ${PSWD}  ${USER_FNAME_TXT}  ${USER_LNAME_TXT}  Create User
+	${USER_F_L_NAME}  Set Variable  ${USER_FNAME_TXT} ${USER_LNAME_TXT}
+	Navigate To Home Page
+	Run Keyword And Continue On Failure  Assign Role To the User  ${USER_F_L_NAME}  Student
+	Delete User  ${USER_F_L_NAME}
+	##End Test
+	###################################################################################################
+	[Teardown]  Wrap Up Test
+	
+TC-04: Creating Chat Activity In the Course
+	## Start Test 
+    ## Test Case For Assigning Role To User 
+   [Tags]  USER-ROLE  
+	##################################################################################################
+	Go To JBLearning Application and Login  ${USER_NAME}  ${PASSWORD}
+	Creating Chat Activity In the Course
+	##End Test
+	###################################################################################################
+	[Teardown]  Wrap Up Test
+	
+TC-05: Creating Forum Activity In the Course
+	## Start Test 
+    ## Test Case For Assigning Role To User 
+   [Tags]  USER-ROLE
+	##################################################################################################
+	Go To JBLearning Application and Login  ${USER_NAME}  ${PASSWORD}
+	Creating Forum Activity In the Course
+	##End Test
+	###################################################################################################
+	[Teardown]  Wrap Up Test	
+	
+TC-06: Creating Attendance Activity In the Course
+	## Start Test 
+    ## Test Case For Assigning Role To User 
+   [Tags]  USER-ROLE
+	##################################################################################################
+	Go To JBLearning Application and Login  ${USER_NAME}  ${PASSWORD}
+	Creating Attendance Activity In the Course
+	##End Test
+	###################################################################################################
+	[Teardown]  Wrap Up Test		

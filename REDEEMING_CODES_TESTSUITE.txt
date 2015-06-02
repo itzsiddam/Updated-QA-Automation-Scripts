@@ -1,0 +1,23 @@
+*** Settings ***
+Documentation  
+Resource  ../COMMON/INCLUDE.txt
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Suite Setup  Setup Test Suite  ${EN}
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*** Test Cases ***
+TC-01: Create User Using Redeeming Code
+	## Start Test 
+    ## Test Case For Create User Using Redeeming Code
+   [Tags]  REDEEM_CODE    
+	##################################################################################################
+	${DATA_DICTIONARY}  Get Test Data  TESTDATA.xls  InCompleted
+	Go To JBLearning Application, Redeem Code and Login  ${DATA_DICTIONARY}
+	#Go To JBLearning Application and Login  test_user01  Ascend_1
+	#Student Taking Quiz
+	##End Test  
+	##################################################################################################
+	#[Teardown]  Wrap Up Test	
+	
+
+	

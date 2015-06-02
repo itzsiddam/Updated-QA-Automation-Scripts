@@ -1,0 +1,192 @@
+*** Settings ***
+Documentation  This resource file that contains non-product specific keywords for testing.
+Resource  INCLUDE.txt
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*** Keywords ***
+Go To JBLearning Application and Login
+	[Arguments]  ${USER_ID}  ${USER_PASSWORD} 
+	Open Browser  ${LOGINURL}  ${BROWSER}  
+	Maximize Browser Window 
+	Set Selenium Speed  ${SEL_SPEED}	
+	${LOGIN_BTN_STAT}  Run Keyword and Return Status  Element Should Be Visible  ${LOGIN_BTN}
+	Run Keyword If  '${LOGIN_BTN_STAT}'=='True'  Click ELement  ${LOGIN_BTN}
+	Input Text  ${LOGIN_EDIT}  ${USER_ID}
+	Input Password  ${PASSWORD_EDIT}  ${USER_PASSWORD}
+	${SUBMIT_BTN_STAT}  Run Keyword and Return Status  Element Should Be Visible  ${LOGIN_SUBMIT_BTN_QA}
+	Run Keyword If  '${SUBMIT_BTN_STAT}'=='True'  Click ELement  ${LOGIN_SUBMIT_BTN_QA}  ELSE  Click Button  ${LOGIN_SUBMIT_BTN} 
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  ${SYSTEM_CHECK_CLOSE_BTN}
+	Run Keyword If  '${STAT}'=='True'  Click ELement  ${SYSTEM_CHECK_CLOSE_BTN}
+	
+	
+Log out of JBLearning Application
+	Click Element	${LOGOUT_BTN}
+	
+Wrap Up Test
+	Log out of JBLearning Application
+	Close Window
+	
+Setup Test Suite
+	#Created By: Srikanth Siddam
+	[Documentation]  Sets up the login Url specified test environment to execute the test suite.
+	[Arguments]  ${EN}
+	Run Keyword If  '${EN}'=='QA'  Set Global Variable  ${LOGINURL}  http://qastaging.dev.jbldev.com:8024/login/index.php
+	Run Keyword If  '${EN}'=='STG'  Set Global Variable  ${LOGINURL}  http://www.staging.jblearning.com/
+	Run Keyword If  '${EN}'=='PROD'  Set Global Variable  ${LOGINURL}  http://www.jblearning.com/
+	Run Keyword If  '${EN}'=='LOCAL'  Set Global Variable  ${LOGINURL}  http://itzsiddam.dev.jbldev.com:8024/login/index.php
+	
+Create User
+	[Arguments]  ${NAME_USER}=None
+	${USER}  Run Keyword If  '${NAME_USER}'=='None'  Generate Random String  6  [LOWER]  ELSE  Set Variable  ${NAME_USER}
+	${PSWD}  Set Variable  Testing@123
+	${ATTR_VAL}  Get Element Attribute  ${SITE_ADMINISTRATION_LNK}/../..@aria-expanded
+	Run Keyword If  '${ATTR_VAL}'=='false'  Click Element  ${SITE_ADMINISTRATION_LNK}
+	${USERS_ATTR_VAL}  Get Element Attribute  ${SITE_ADMINISTRATION_USERS_LNK}/../..@aria-expanded
+	Run Keyword If  '${USERS_ATTR_VAL}'=='false'  Click Element  ${SITE_ADMINISTRATION_USERS_LNK}
+	${ACNTS_ATTR_VAL}  Get Element Attribute  ${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}/../..@aria-expanded
+	Run Keyword If  '${ACNTS_ATTR_VAL}'=='false'  Click Element  ${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}
+	Click Element  ${ADD_USER_LNK}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${USERNAME_TXT}
+	Input Text  ${USERNAME_TXT}  ${USER}
+	Input Text  ${PASSWORD_TXT}  ${PSWD}
+	${TMP}  Generate Random String  4  [LETTERS]
+	${USER_FNAME_TXT}  Set Variable  AutoF ${TMP}
+	${USER_LNAME_TXT}  Set Variable   AutoL ${TMP}
+	Input Text  ${USER_FIRSTNAME_TXT}  ${USER_FNAME_TXT}
+	Input Text  ${USER_LASTNAME_TXT}  ${USER_LNAME_TXT}
+	Input Text  ${USER_EMAIL_TXT}  Auto${TMP}@nomail.com
+	Input Text  ${USER_CITY_TXT}  Boston
+	Select From List  ${USER_COUNTRY_DROPDOWN}  United States	
+	Click Element  ${CREATE_USER_BTN}
+	Element Should Be Visible  //a[text()='${USER_FNAME_TXT} ${USER_LNAME_TXT}']
+	[Return]  ${USER}  ${PSWD}  ${USER_FNAME_TXT}  ${USER_LNAME_TXT}
+	
+Navigate To Home Page
+	${URL}  Replace String  ${LOGINURL}  /login/index.php  ${EMPTY}
+	Go To  ${URL}
+	
+Assign Role To the User
+	[Arguments]  ${NAME_USER}  ${ROLE}		
+	${FRONT_PAGE_SETTINGS_ATTR_VAL}  Get Element Attribute  ${FRONT_PAGE_SETTINGS_LNK}/../..@aria-expanded
+	Run Keyword If  '${FRONT_PAGE_SETTINGS_ATTR_VAL}'=='false'  Click Element  ${FRONT_PAGE_SETTINGS_LNK}
+	Click Element  ${TURN_EDITING_ON_LNK}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${TURN_EDITING_OFF_LNK}
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a
+	${ATTR_VAL}  Get Element Attribute  ${COURSE_ADMINISTRATION_LNK}/../..@aria-expanded
+	Run Keyword If  '${ATTR_VAL}'=='false'  Click Element  ${COURSE_ADMINISTRATION_LNK}
+	${USERS_ATTR_VAL}  Get Element Attribute  ${COURSE_ADMINISTRATION_USERS_LNK}/../..@aria-expanded
+	Run Keyword If  '${USERS_ATTR_VAL}'=='false'  Click Element  ${COURSE_ADMINISTRATION_USERS_LNK}
+	Click Element  ${ENROLLED_USERS_LNK}
+	Click Element  ${ENROL_USERS_LNK}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${ENROL_USER_SEARCH_TXT}
+	Input Text  ${ENROL_USER_SEARCH_TXT}  ${NAME_USER}
+	Click Element  ${ENROL_USER_SEARCH_BTN}
+	Sleep  5
+	Select From List  ${ASSIGN_ROLE_DROPDOWN}  ${ROLE}
+	Click Element  //div[text()='${NAME_USER}']/../..//input[@value='Enrol']
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  //div[text()='${NAME_USER}']/../..//input[@value='Enrol']
+	Click Element  ${FINISH_ENROLL_USERS_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  //table[contains(@class,'userenrolment')]/tbody/tr/td/div[contains(text(),'${NAME_USER}')]
+	
+Delete User
+	[Arguments]  ${NAME_USER}
+	Navigate To Home Page
+	${ATTR_VAL}  Get Element Attribute  ${SITE_ADMINISTRATION_LNK}/../..@aria-expanded
+	Run Keyword If  '${ATTR_VAL}'=='false'  Click Element  ${SITE_ADMINISTRATION_LNK}
+	${USERS_ATTR_VAL}  Get Element Attribute  ${SITE_ADMINISTRATION_USERS_LNK}/../..@aria-expanded
+	Run Keyword If  '${USERS_ATTR_VAL}'=='false'  Click Element  ${SITE_ADMINISTRATION_USERS_LNK}
+	${ACNTS_ATTR_VAL}  Get Element Attribute  ${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}/../..@aria-expanded
+	Run Keyword If  '${ACNTS_ATTR_VAL}'=='false'  Click Element  ${SITE_ADMINISTRATION_USERS_ACCOUNTS_LNK}
+	Click Element  ${BROWSE_LIST_OF_USERS_LNK}
+	Click Element  //a[text()='${NAME_USER}']/../../td[6]/a[@title='Delete']
+	Click Element  ${CONTINUE_BTN}
+	Element Should Not Be Visible  //a[text()='${NAME_USER}']
+	
+Creating Chat Activity In the Course			
+	Navigate To Home Page
+	${FRONT_PAGE_SETTINGS_ATTR_VAL}  Get Element Attribute  ${FRONT_PAGE_SETTINGS_LNK}/../..@aria-expanded
+	Run Keyword If  '${FRONT_PAGE_SETTINGS_ATTR_VAL}'=='false'  Click Element  ${FRONT_PAGE_SETTINGS_LNK}
+	Click Element  ${TURN_EDITING_ON_LNK}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${TURN_EDITING_OFF_LNK}
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${COURSE_TOPIC_1}
+	${TMP}  Generate Random String  4  [LETTERS]
+	${CHAT_NAME}  Set Variable  AutoChat ${TMP}
+	Mouse Over  ${COURSE_TOPIC_1}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${COURSE_TOPIC_1}/..//span[text()='Add an activity or resource']
+	#Click Element  ${COURSE_TOPIC_1}/..//span[text()='Add an activity or resource']/..
+	Execute Javascript  document.getElementsByClassName('section-modchooser-text').item(1).click();
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${ACTIVITY_ADD_BTN}
+	Click Element  ${CHAT_RADIO_BTN}
+	Click Element  ${ACTIVITY_ADD_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  ${ACTIVITY_ADD_BTN}
+	Input Text  ${CHAT_NAME_TXT}  ${CHAT_NAME}
+	Select Frame  ${CHAT_DESCRIPTION_IFRAME}
+	Input Text  ${CHAT_DESCRIPTION_BODY}  ${CHAT_NAME}
+	Unselect Frame
+	#Select Window
+	Click Element  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Execute Javascript  document.getElementsByClassName('section main clearfix sectiondraggable yui3-dd-drop').item(0).click();
+	Element Should Be Visible  //span[contains(text(),'${CHAT_NAME}')]
+	
+Creating Forum Activity In the Course
+	Navigate To Home Page
+	${FRONT_PAGE_SETTINGS_ATTR_VAL}  Get Element Attribute  ${FRONT_PAGE_SETTINGS_LNK}/../..@aria-expanded
+	Run Keyword If  '${FRONT_PAGE_SETTINGS_ATTR_VAL}'=='false'  Click Element  ${FRONT_PAGE_SETTINGS_LNK}
+	Click Element  ${TURN_EDITING_ON_LNK}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${TURN_EDITING_OFF_LNK}
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${COURSE_TOPIC_1}
+	${TMP}  Generate Random String  4  [LETTERS]
+	${FORUM_NAME}  Set Variable  AutoForum ${TMP}
+	Mouse Over  ${COURSE_TOPIC_1}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${COURSE_TOPIC_1}/..//span[text()='Add an activity or resource']
+	#Click Element  ${COURSE_TOPIC_1}/..//span[text()='Add an activity or resource']/..
+	Execute Javascript  document.getElementsByClassName('section-modchooser-text').item(1).click();
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${ACTIVITY_ADD_BTN}
+	Click Element  ${FORUM_RADIO_BTN}
+	Click Element  ${ACTIVITY_ADD_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  ${ACTIVITY_ADD_BTN}
+	Input Text  ${CHAT_NAME_TXT}  ${FORUM_NAME}
+	Select Frame  ${CHAT_DESCRIPTION_IFRAME}
+	Input Text  ${CHAT_DESCRIPTION_BODY}  ${FORUM_NAME}
+	Unselect Frame
+	#Select Window
+	Click Element  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Execute Javascript  document.getElementsByClassName('section main clearfix sectiondraggable yui3-dd-drop').item(0).click();
+	Element Should Be Visible  //span[contains(text(),'${FORUM_NAME}')]
+	
+Creating Attendance Activity In the Course
+	Navigate To Home Page
+	${FRONT_PAGE_SETTINGS_ATTR_VAL}  Get Element Attribute  ${FRONT_PAGE_SETTINGS_LNK}/../..@aria-expanded
+	Run Keyword If  '${FRONT_PAGE_SETTINGS_ATTR_VAL}'=='false'  Click Element  ${FRONT_PAGE_SETTINGS_LNK}
+	Click Element  ${TURN_EDITING_ON_LNK}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${TURN_EDITING_OFF_LNK}
+	Click Element  xpath=(//div[@class='coursebox clearfix'])[1]//h3/a
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${COURSE_TOPIC_1}
+	${TMP}  Generate Random String  4  [LETTERS]
+	${ATTENDANCE_NAME}  Set Variable  AutoAttendance ${TMP}
+	Mouse Over  ${COURSE_TOPIC_1}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${COURSE_TOPIC_1}/..//span[text()='Add an activity or resource']
+	#Click Element  ${COURSE_TOPIC_1}/..//span[text()='Add an activity or resource']/..
+	Execute Javascript  document.getElementsByClassName('section-modchooser-text').item(1).click();
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Be Visible  ${ACTIVITY_ADD_BTN}
+	Click Element  ${ATTENDANCE_RADIO_BTN}
+	Click Element  ${ACTIVITY_ADD_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  ${ACTIVITY_ADD_BTN}
+	Input Text  ${CHAT_NAME_TXT}  ${ATTENDANCE_NAME}
+	Sleep  5	
+	Click Element  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	${STAT}  Run Keyword and Return Status  Element Should Be Visible  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Run Keyword If  '${STAT}'=='True'  Click Element  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Wait Until Keyword Succeeds  2 min  15 sec  Element Should Not Be Visible  ${CHAT_SAVE_AND_RETURN_TO_COURSE_BTN}
+	Execute Javascript  document.getElementsByClassName('section main clearfix sectiondraggable yui3-dd-drop').item(0).click();
+	Element Should Be Visible  //span[contains(text(),'${ATTENDANCE_NAME}')]	
+
+	
+	
+	
+	
+	

@@ -1,0 +1,27 @@
+*** Settings ***
+Documentation  
+Resource  ../COMMON/INCLUDE.txt
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Suite Setup  Setup Test Suite  ${EN}
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*** Test Cases ***
+TC-01: Logging into STG2 application as Teacher
+	## Start Test 
+    
+   [Tags]  USER-ROLE
+	##################################################################################################	
+	Go To JBLearning Application and Login  ${USER_NAME}  ${PASSWORD}		
+	#${USER_FNAME_TXT}  ${USER_LNAME_TXT}  Create User
+	#${USER_F_L_NAME}  Set Variable  ${USER_FNAME_TXT} ${USER_LNAME_TXT}
+	#Navigate To Home Page
+	#Run Keyword And Continue On Failure  Assign Role To the User  ${USER_F_L_NAME}  Teacher
+	#Log out of JBLearning Application
+	#Navigate To JBLearning Application and Login  ${USER}  ${PSWD}
+	#Creating Chat Activity In the Course
+	#Log out of JBLearning Application
+	#Navigate To JBLearning Application and Login  ${USER_NAME}  ${PASSWORD}
+	#Delete User  ${USER_F_L_NAME}
+	##End Test
+	###################################################################################################
+	#[Teardown]  Wrap Up Test

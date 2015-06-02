@@ -1,0 +1,40 @@
+*** Settings ***
+Documentation  
+Resource  ../COMMON/INCLUDE.txt
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Suite Setup  Setup Test Suite  ${EN}
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*** Test Cases ***
+TC-01: Login With Admin Role
+	## Start Test
+	## Test Case For Admin
+	[Tags]  ADMIN  LOGIN
+	##################################################################################################
+	Go To JBLearning Application and Login  ${USER_NAME}  ${PASSWORD}
+	
+	## End Test
+	##################################################################################################
+	[Teardown]  Wrap Up Test
+	
+TC-02: Login With Teacher Role
+	## Start Test
+	## Test Case For Teacher
+	[Tags]  TEACHER  LOGIN
+	##################################################################################################
+	Go To JBLearning Application and Login  ${USER_NAME_TEACHER}  ${PASSWORD_TEACHER}
+	
+	## End Test
+	##################################################################################################
+	[Teardown]  Wrap Up Test	
+	
+TC-03: Login with Student Role
+	## Start Test 
+    ## Test Case For Student
+	[Tags]  STUDENT  LOGIN
+	##################################################################################################
+	Go To JBLearning Application and Login  ${USER_NAME_STUDENT}  ${PASSWORD_STUDENT}
+
+	##End Teste
+	##################################################################################################
+	[Teardown]  Wrap Up Test
